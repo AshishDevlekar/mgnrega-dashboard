@@ -1,4 +1,4 @@
-// models/StateSummary.js
+
 const mongoose = require('mongoose');
 
 const stateSummarySchema = new mongoose.Schema({
