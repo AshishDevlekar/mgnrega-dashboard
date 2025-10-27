@@ -1,4 +1,4 @@
-// scripts/fixIndexes.js
+
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -24,7 +24,7 @@ async function fixIndexes() {
       console.log('✓ Index already removed or doesn\'t exist');
     }
 
-    // Drop all indexes except _id
+
     console.log('\n🔄 Dropping all indexes except _id...');
     await performancesCollection.dropIndexes();
     console.log('✓ All indexes dropped');
