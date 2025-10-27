@@ -1,5 +1,4 @@
-// seed.js - Seed database with Rajasthan districts and sample data
-// seed.js - Seed database with Rajasthan districts and sample data
+
 const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
@@ -57,13 +56,13 @@ const rajasthanDistricts = [
 
 async function seedData() {
   try {
-    // Clear existing data
+    
     await District.deleteMany({});
     await Performance.deleteMany({});
     
     console.log('Cleared existing data');
     
-    // Insert districts
+    
     for (const dist of rajasthanDistricts) {
       await District.create({
         stateCode: '27',
@@ -75,7 +74,7 @@ async function seedData() {
     
     console.log('Inserted districts');
     
-    // Insert sample performance data for last 6 months
+    
     const months = ['April', 'May', 'June', 'July', 'August', 'September', 'October'];
     const year = 2024;
     
