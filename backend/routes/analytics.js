@@ -1,10 +1,10 @@
-// routes/analytics.js
+
 const express = require('express');
 const router = express.Router();
 const StateSummary = require('../models/StateSummary');
 const Performance = require('../models/Performance');
 
-// GET state summary
+
 router.get('/state-summary', async (req, res) => {
   try {
     const summary = await StateSummary.findOne()
@@ -27,7 +27,7 @@ router.get('/state-summary', async (req, res) => {
   }
 });
 
-// GET top districts
+
 router.get('/top-districts', async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 5;
