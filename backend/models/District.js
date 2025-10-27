@@ -1,4 +1,4 @@
-// models/District.js
+
 const mongoose = require('mongoose');
 
 const districtSchema = new mongoose.Schema({
@@ -9,11 +9,11 @@ const districtSchema = new mongoose.Schema({
   stateName: { type: String, default: 'Rajasthan' },
   location: {
     type: { type: String, enum: ['Point'], default: 'Point' },
-    coordinates: { type: [Number], default: [0, 0] } // [longitude, latitude]
+    coordinates: { type: [Number], default: [0, 0] } 
   }
 }, { timestamps: true });
 
-// Create geospatial index for nearby search
+
 districtSchema.index({ location: '2dsphere' });
 
 module.exports = mongoose.model('District', districtSchema);
