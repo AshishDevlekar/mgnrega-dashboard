@@ -944,7 +944,7 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
               value={`₹${formatNumber(performance.totalExpenditure)}`} 
               subtitle={`${language === 'hi' ? 'मजदूरी' : 'Wages'}: ₹${formatNumber(performance.wageExpenditure)}`}
               color="#DD6B20"
-              icon={DollarSign}
+              icon={() => <span style={{ fontSize: '20px', fontWeight: 'bold' }}>₹</span>}
               explanation={explanations[language].expenditure}
               target={MOCK_TARGETS.totalExpenditure}
               trend={MOCK_TRENDS.totalExpenditure}
