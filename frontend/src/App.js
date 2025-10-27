@@ -382,7 +382,7 @@ const App = () => {
       explainerDesc: "मनरेगा एक सरकारी योजना है जो ग्रामीण क्षेत्रों में परिवारों को साल में 100 दिन का रोजगार देती है। इससे सड़क, तालाब, और अन्य विकास कार्य होते हैं।"
     },
     en: {
-      title: "MNREGA Dashboard",
+      title: "MGNREGA Dashboard",
       subtitle: "Mahatma Gandhi National Rural Employment Guarantee Act",
       state: "Rajasthan",
       year: "Financial Year 2024-25",
@@ -405,8 +405,8 @@ const App = () => {
       autoDetected: "Auto-detected",
       offline: "Offline Mode",
       usingCache: "Using cached data",
-      explainerTitle: "What is MNREGA?",
-      explainerDesc: "MNREGA is a government scheme guaranteeing 100 days of employment to rural households annually, supporting infrastructure like roads and ponds."
+      explainerTitle: "What is MGNREGA?",
+      explainerDesc: "MGNREGA is a government scheme guaranteeing 100 days of employment to rural households annually, supporting infrastructure like roads and ponds."
     }
   };
 
@@ -420,7 +420,7 @@ const App = () => {
     },
     en: {
       personDays: "Person Days = One person employed for one day. Example: 100 people for 10 days = 1000 person days",
-      jobCard: "Job Card = Family identification card for getting MNREGA work",
+      jobCard: "Job Card = Family identification card for getting MGNREGA work",
       expenditure: "Total Expenditure = Wages + Materials + Other expenses",
       womenParticipation: "Women's Participation = Percentage of women among total workers"
     }
@@ -1130,13 +1130,13 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
           )}
           <footer style={{ textAlign: "center", padding: "20px", color: "#555", borderTop: "2px solid #e0e0e0", marginTop: "30px" }}>
             <p style={{ margin: "5px 0" }}>
-              © 2025 {language === 'hi' ? 'मनरेगा डैशबोर्ड' : 'MNREGA Dashboard'}. 
+              © 2025 {language === 'hi' ? 'मनरेगा डैशबोर्ड' : 'MGNREGA Dashboard'}. 
               {language === 'hi' ? ' सभी अधिकार सुरक्षित।' : ' All rights reserved.'}
             </p>
             <p style={{ fontSize: "12px", color: "#888", margin: "5px 0" }}>
               {language === 'hi' 
                 ? 'डेटा स्रोत: data.gov.in | अधिक जानकारी के लिए नजदीकी मनरेगा कार्यालय से संपर्क करें' 
-                : 'Data Source: data.gov.in | Contact nearest MNREGA office for more information'}
+                : 'Data Source: data.gov.in | Contact nearest MGNREGA office for more information'}
             </p>
           </footer>
         </>
