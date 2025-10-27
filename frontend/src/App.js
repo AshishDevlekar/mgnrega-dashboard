@@ -1136,7 +1136,7 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
             <p style={{ fontSize: "12px", color: "#888", margin: "5px 0" }}>
               {language === 'hi' 
                 ? 'डेटा स्रोत: data.gov.in | अधिक जानकारी के लिए नजदीकी मनरेगा कार्यालय से संपर्क करें' 
-                : 'Data Source: data.gov.in (Cached data used for offline mode) | Contact nearest MNREGA office for more information'}
+                : 'Data Source: data.gov.in | Contact nearest MNREGA office for more information'}
             </p>
           </footer>
         </>
