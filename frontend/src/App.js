@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { HelpCircle, TrendingUp, Users, Briefcase, DollarSign, MapPin, Clock, Info } from "lucide-react";
 
-// =========================================================
-// NEW ENHANCED UI COMPONENTS (for low-literacy population)
-// =========================================================
 
-// 1. Performance Badge Component
 const PerformanceBadge = ({ value, target, label }) => {
   const percentage = (value / target) * 100;
   const isGood = percentage >= 100;
@@ -28,7 +24,6 @@ const PerformanceBadge = ({ value, target, label }) => {
   );
 };
 
-// 2. Progress Bar Component
 const ProgressBar = ({ current, target, color }) => {
   const percentage = Math.min((current / target) * 100, 100);
   
@@ -51,7 +46,6 @@ const ProgressBar = ({ current, target, color }) => {
   );
 };
 
-// 3. District Ranking Badge
 const RankingBadge = ({ rank, total }) => {
   const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : "📊";
   
@@ -74,9 +68,7 @@ const RankingBadge = ({ rank, total }) => {
   );
 };
 
-// 4. Comparison Indicator
 const ComparisonIndicator = ({ districtValue, stateAvg, label, language }) => {
-  // Ensure we have numbers to compare, if not, show N/A gracefully
   if (typeof districtValue !== 'number' || typeof stateAvg !== 'number' || stateAvg === 0) {
     return (
       <div style={{
@@ -142,8 +134,6 @@ const ComparisonIndicator = ({ districtValue, stateAvg, label, language }) => {
     </div>
   );
 };
-
-// 5. API Status Banner
 const APIStatusBanner = ({ status, lastSync, language }) => {
     const t = language === 'hi' ? {
       offlineTitle: "ऑफ़लाइन मोड",
@@ -195,8 +185,6 @@ const APIStatusBanner = ({ status, lastSync, language }) => {
       </div>
     );
 };
-
-// 6. Enhanced Stat Card with Progress
 const EnhancedStatCard = ({ 
   title, 
   value, 
@@ -239,7 +227,6 @@ const EnhancedStatCard = ({
       e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
     }}
     >
-      {/* Trend indicator in corner */}
       {trend && (
         <div style={{
           position: "absolute",
@@ -284,8 +271,7 @@ const EnhancedStatCard = ({
           {subtitle}
         </p>
       )}
-      
-      {/* Progress bar if target exists */}
+    
       {target && (
         <>
           <ProgressBar current={value} target={target} color={color} />
@@ -299,8 +285,6 @@ const EnhancedStatCard = ({
           </div>
         </>
       )}
-      
-      {/* Trend change */}
       {trend && (
         <div style={{
           fontSize: "12px",
@@ -315,7 +299,6 @@ const EnhancedStatCard = ({
   );
 };
 
-// 7. Simple Explainer Card for Rural Users
 const ExplainerCard = ({ icon, title, description }) => (
   <div style={{
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
@@ -338,10 +321,6 @@ const ExplainerCard = ({ icon, title, description }) => (
   </div>
 );
 
-// =========================================================
-// MAIN APP COMPONENT
-// =========================================================
-
 const API_URL = "https://mgnrega-dashboard-2hce.onrender.com/api";
 
 const App = () => {
@@ -360,8 +339,6 @@ const App = () => {
   const [apiStatus, setApiStatus] = useState("online");
   const [cacheUsed, setCacheUsed] = useState(false);
 
-  // --- MOCK DATA FOR NEW COMPONENTS ---
-  // Mock data for EnhancedStatCard (since we don't have a live backend)
   const MOCK_TARGETS = {
     totalJobCards: 50000,
     householdsEmployed: 45000,
@@ -375,10 +352,7 @@ const App = () => {
     totalExpenditure: 8,
   };
   const MOCK_RANK = 2;
-  // ------------------------------------
 
-
-  // Translations
   const translations = {
     hi: {
       title: "मनरेगा डैशबोर्ड",
@@ -404,7 +378,6 @@ const App = () => {
       autoDetected: "स्वतः पहचाना गया",
       offline: "ऑफ़लाइन मोड",
       usingCache: "संग्रहित डेटा उपयोग में",
-      // Explainer Text
       explainerTitle: "मनरेगा क्या है?",
       explainerDesc: "मनरेगा एक सरकारी योजना है जो ग्रामीण क्षेत्रों में परिवारों को साल में 100 दिन का रोजगार देती है। इससे सड़क, तालाब, और अन्य विकास कार्य होते हैं।"
     },
@@ -432,15 +405,12 @@ const App = () => {
       autoDetected: "Auto-detected",
       offline: "Offline Mode",
       usingCache: "Using cached data",
-      // Explainer Text
       explainerTitle: "What is MNREGA?",
       explainerDesc: "MNREGA is a government scheme guaranteeing 100 days of employment to rural households annually, supporting infrastructure like roads and ponds."
     }
   };
 
   const t = translations[language];
-
-  // Explanations for tooltips
   const explanations = {
     hi: {
       personDays: "व्यक्ति दिवस = एक व्यक्ति को एक दिन का रोजगार। उदाहरण: 100 लोगों को 10 दिन = 1000 व्यक्ति दिवस",
@@ -475,7 +445,6 @@ const App = () => {
           const { latitude, longitude } = position.coords;
           setUserLocation({ lat: latitude, lon: longitude });
           
-          // Try to detect district from coordinates
           try {
             const response = await fetch(`${API_URL}/districts/nearby?lat=${latitude}&lon=${longitude}`);
             const data = await response.json();
@@ -502,7 +471,6 @@ const App = () => {
       setApiStatus("online");
       setCacheUsed(false);
     } catch (err) {
-      // Try to load from cache
       const cached = localStorage.getItem('mnrega_cache');
       if (cached) {
         const data = JSON.parse(cached);
@@ -518,7 +486,6 @@ const App = () => {
     }
   };
 
-  // Hindi names mapping for all Rajasthan districts
 const districtHindiNames = {
   'Ajmer': 'अजमेर',
   'Alwar': 'अलवर',
@@ -556,7 +523,6 @@ const districtHindiNames = {
 };
 
 const fetchDistricts = async () => {
-  // Check cache first for districts
   const cachedDistricts = localStorage.getItem('mnrega_districts');
   let districtsData = [];
   if (cachedDistricts) {
@@ -567,8 +533,7 @@ const fetchDistricts = async () => {
   try {
     const res = await fetch(`${API_URL}/districts`);
     const data = await res.json();
-    
-    // Add Hindi names for all districts
+ 
     const fetchedData = (data.data || []).map(d => ({
         ...d,
         hindiName: districtHindiNames[d.districtName] || d.districtName
@@ -577,7 +542,6 @@ const fetchDistricts = async () => {
     if (fetchedData?.length > 0 && !selectedDistrict) {
       setSelectedDistrict(fetchedData[0].districtCode);
     }
-    // Cache districts
     localStorage.setItem('mnrega_districts', JSON.stringify(fetchedData));
     setApiStatus("online");
   } catch (err) {
@@ -607,7 +571,6 @@ const fetchDistricts = async () => {
       const res = await fetch(`${API_URL}/districts/${code}/summary`);
       data = await res.json();
       setDistrictData(data);
-      // Cache district data
       localStorage.setItem(`mnrega_district_${code}`, JSON.stringify(data));
       setApiStatus("online");
     } catch (err) {
@@ -621,15 +584,13 @@ const fetchDistricts = async () => {
 
   const fetchHistoricalData = async (code) => {
     const cachedHistoricalData = localStorage.getItem(`mnrega_historical_${code}`);
-    
-    // Clear old cache to ensure fresh data
+
     localStorage.removeItem(`mnrega_historical_${code}`);
 
     try {
       const res = await fetch(`${API_URL}/districts/${code}/historical`);
       const responseData = await res.json();
       
-      // Sort the data chronologically for Financial Year (April to March)
       const monthOrder = {
         'April': 1, 'May': 2, 'June': 3, 'July': 4, 'August': 5, 'September': 6,
         'October': 7, 'November': 8, 'December': 9, 'January': 10, 'February': 11, 'March': 12
@@ -642,7 +603,6 @@ const fetchDistricts = async () => {
       localStorage.setItem(`mnrega_historical_${code}`, JSON.stringify(sortedData));
       setApiStatus("online");
     } catch {
-      // Mock historical data in chronological order (FY 2024-25: April to October)
       const mockData = [
         { month: "April", personDays: 420000, expenditure: 11800000 },
         { month: "May", personDays: 310000, expenditure: 8900000 },
@@ -659,7 +619,7 @@ const fetchDistricts = async () => {
   };
 
   const fetchStateSummary = async () => {
-    // Check cache first for state summary
+
     const cached = localStorage.getItem('mnrega_cache');
     let summaryData = null;
     let topData = null;
@@ -683,7 +643,6 @@ const fetchDistricts = async () => {
       setStateSummary(summaryData);
       setTopDistricts(topData.data || []);
       
-      // Cache state summary
       localStorage.setItem('mnrega_cache', JSON.stringify({
         districts,
         stateSummary: summaryData,
@@ -693,13 +652,12 @@ const fetchDistricts = async () => {
       setApiStatus("online");
     } catch (err) {
       console.error(err);
-      if (!summaryData) { // Fallback only if cache failed too
-        // Fallback for demo
+      if (!summaryData) { 
         setStateSummary({
             totalDistricts: 33,
             data: {
                 totalPersonDays: 47000000,
-                totalExpenditure: 93370000000, // 933.7 K Crore
+                totalExpenditure: 93370000000, 
                 totalWorks: 24930,
                 avgWomenParticipation: 45.5
             }
@@ -790,7 +748,7 @@ const fetchDistricts = async () => {
       <div>{error}</div>
     </div>
   );
-// Safety check - wait for data to load
+
 if (!stateSummary || !stateSummary.data) {
   return (
     <div style={{ textAlign: "center", marginTop: "100px" }}>
@@ -812,7 +770,7 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
 
   return (
     <div style={{ fontFamily: "Arial, sans-serif", background: "#f5f5f5", minHeight: "100vh", padding: "20px" }}>
-      {/* Header */}
+     
       <header style={{ background: "#2E8B57", color: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px", position: "relative" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap" }}>
           <div>
@@ -829,7 +787,7 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
             )}
           </div>
           
-          {/* Language Toggle */}
+        
           <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
             {userLocation && (
               <div style={{ 
@@ -862,14 +820,14 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
         </div>
       </header>
 
-      {/* --- INTEGRATION: API Status Banner (Offline Mode) --- */}
+      
       <APIStatusBanner 
         status={apiStatus} 
         lastSync={lastUpdated?.toLocaleTimeString(language === 'hi' ? 'hi-IN' : 'en-IN')} 
         language={language}
       />
 
-      {/* State Summary */}
+     
       {stateSummary && (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px,1fr))", gap: "20px", marginBottom: "30px" }}>
           <StatCard 
@@ -901,14 +859,12 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
         </div>
       )}
 
-      {/* --- INTEGRATION: Explainer Card (for low literacy) --- */}
       <ExplainerCard 
         icon="📋"
         title={t.explainerTitle}
         description={t.explainerDesc}
       />
 
-      {/* District Selector */}
       <div style={{ background: "#fff", padding: "20px", borderRadius: "10px", marginBottom: "30px", maxWidth: "400px" }}>
         <label 
           style={{ 
@@ -941,17 +897,14 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
         </select>
       </div>
 
-      {/* District Performance */}
       {performance.totalJobCards && districtData?.district && (
         <>
           <h2 style={{ fontSize: "24px", marginBottom: "15px" }}>
             {districtData.district[language === 'hi' ? 'hindiName' : 'name']} {t.performance}
           </h2>
 
-          {/* --- INTEGRATION: Ranking Badge --- */}
           <RankingBadge rank={MOCK_RANK} total={stateSummary?.totalDistricts || 33} />
           
-          {/* --- INTEGRATION: Enhanced Stat Cards (replacing old StatCards) --- */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "20px", marginBottom: "30px" }}>
             <EnhancedStatCard 
               title={t.jobCards} 
@@ -999,7 +952,6 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
             />
           </div>
 
-          {/* --- INTEGRATION: Comparison Indicator (replacing old comparison) --- */}
           {stateSummary && (
             <div style={{ background: "#fff", padding: "20px", borderRadius: "10px", marginBottom: "30px" }}>
               <h3 style={{ marginBottom: "15px" }}>{t.comparison}</h3>
@@ -1020,8 +972,6 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
             </div>
           )}
 
-
-          {/* Historical Trend - UPDATED SECTION */}
           {historicalData.length > 0 && (
             <div style={{ background: "#fff", padding: "20px", borderRadius: "10px", marginBottom: "30px" }}>
               <h3 style={{ marginBottom: "15px", display: "flex", alignItems: "center" }}>
@@ -1048,7 +998,6 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
             </div>
           )}
 
-          {/* 2-column: Works + Women */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", marginBottom: "30px" }}>
             <div style={{ flex: "1 1 300px", background: "#fff", padding: "20px", borderRadius: "10px" }}>
               <h3 style={{ marginBottom: "15px" }}>{t.workStatus}</h3>
@@ -1115,7 +1064,6 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
             </div>
           </div>
 
-          {/* Financial Bar Chart */}
           <div style={{ background: "#fff", padding: "20px", borderRadius: "10px", marginBottom: "30px" }}>
             <h3 style={{ marginBottom: "15px" }}>{t.financialStatements}</h3>
             <ResponsiveContainer width="100%" height={300}>
@@ -1134,8 +1082,6 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
               </BarChart>
             </ResponsiveContainer>
           </div>
-
-          {/* Top Districts */}
           {topDistricts.length > 0 && (
             <div style={{ background: "#fff", padding: "20px", borderRadius: "10px", marginBottom: "30px" }}>
               <h3 style={{ marginBottom: "15px" }}>{t.topDistricts}</h3>
@@ -1182,8 +1128,6 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
               </table>
             </div>
           )}
-
-          {/* Footer */}
           <footer style={{ textAlign: "center", padding: "20px", color: "#555", borderTop: "2px solid #e0e0e0", marginTop: "30px" }}>
             <p style={{ margin: "5px 0" }}>
               © 2025 {language === 'hi' ? 'मनरेगा डैशबोर्ड' : 'MNREGA Dashboard'}. 
