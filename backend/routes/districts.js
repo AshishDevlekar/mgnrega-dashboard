@@ -1,11 +1,10 @@
-// routes/districts.js
+
 const express = require('express');
 const router = express.Router();
 const District = require('../models/District');
 const Performance = require('../models/Performance');
 const ApiCache = require('../models/ApiCache');
 
-// Cache middleware
 const cacheMiddleware = async (req, res, next) => {
   const cacheKey = req.originalUrl;
   
@@ -23,17 +22,16 @@ const cacheMiddleware = async (req, res, next) => {
     console.error('Cache error:', error);
   }
   
-  // Store original json method
   res.originalJson = res.json;
   res.json = async function(data) {
-    // Cache the response
+
     try {
       await ApiCache.findOneAndUpdate(
         { cacheKey },
         {
           cacheKey,
           cacheData: data,
-          expiresAt: new Date(Date.now() + 60 * 60 * 1000) // 1 hour
+          expiresAt: new Date(Date.now() + 60 * 60 * 1000) 
         },
         { upsert: true }
       );
@@ -47,7 +45,6 @@ const cacheMiddleware = async (req, res, next) => {
   next();
 };
 
-// GET all districts
 router.get('/', cacheMiddleware, async (req, res) => {
   try {
     const districts = await District.find().select('-__v');
@@ -57,7 +54,7 @@ router.get('/', cacheMiddleware, async (req, res) => {
   }
 });
 
-// GET district summary
+
 router.get('/:code/summary', cacheMiddleware, async (req, res) => {
   try {
     const { code } = req.params;
@@ -67,7 +64,7 @@ router.get('/:code/summary', cacheMiddleware, async (req, res) => {
       return res.status(404).json({ error: 'District not found' });
     }
     
-    // Get latest performance data
+  
     const performance = await Performance.findOne({ districtCode: code })
       .sort({ monthYear: -1 });
     
@@ -99,7 +96,6 @@ router.get('/:code/summary', cacheMiddleware, async (req, res) => {
   }
 });
 
-// GET historical data
 router.get('/:code/historical', cacheMiddleware, async (req, res) => {
   try {
     const { code } = req.params;
@@ -120,7 +116,6 @@ router.get('/:code/historical', cacheMiddleware, async (req, res) => {
   }
 });
 
-// GET nearby district (BONUS - Geolocation)
 router.get('/nearby', async (req, res) => {
   try {
     const { lat, lon } = req.query;
@@ -136,7 +131,7 @@ router.get('/nearby', async (req, res) => {
             type: 'Point',
             coordinates: [parseFloat(lon), parseFloat(lat)]
           },
-          $maxDistance: 100000 // 100km radius
+          $maxDistance: 100000 
         }
       }
     });
