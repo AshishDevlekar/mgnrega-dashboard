@@ -1,4 +1,4 @@
-// models/Performance.js
+
 const mongoose = require('mongoose');
 
 const performanceSchema = new mongoose.Schema({
@@ -38,7 +38,6 @@ const performanceSchema = new mongoose.Schema({
   lastUpdated: { type: Date, default: Date.now }
 }, { timestamps: true });
 
-// Compound index for efficient queries
 performanceSchema.index({ districtCode: 1, monthYear: -1 });
 
 module.exports = mongoose.model('Performance', performanceSchema);
