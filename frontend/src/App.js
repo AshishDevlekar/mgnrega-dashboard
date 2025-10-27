@@ -342,7 +342,7 @@ const ExplainerCard = ({ icon, title, description }) => (
 // MAIN APP COMPONENT
 // =========================================================
 
-const API_URL = "https://mgnrega-dashboard-2hce.onrender.com";
+const API_URL = "https://mgnrega-dashboard-2hce.onrender.com/api";
 
 const App = () => {
   const [districts, setDistricts] = useState([]);
