@@ -1,4 +1,4 @@
-// models/ApiCache.js
+
 const mongoose = require('mongoose');
 
 const apiCacheSchema = new mongoose.Schema({
@@ -7,7 +7,7 @@ const apiCacheSchema = new mongoose.Schema({
   expiresAt: { type: Date, required: true }
 }, { timestamps: true });
 
-// Auto-delete expired cache
+
 apiCacheSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 module.exports = mongoose.model('ApiCache', apiCacheSchema);
