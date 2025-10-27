@@ -847,7 +847,7 @@ const stateAvgDays = (totalPersonDays / totalDistricts) / totalWorks;
             title={t.totalExpense} 
             value={`₹${formatNumber(stateSummary.data.totalExpenditure)}`} 
             color="#38A169"
-            icon={DollarSign}
+            icon={() => <span style={{ fontSize: '20px', fontWeight: 'bold' }}>₹</span>}
             explanation={explanations[language].expenditure}
           />
           <StatCard 
